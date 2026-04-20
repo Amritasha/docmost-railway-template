@@ -1,7 +1,7 @@
 # Docmost on Railway
 
 [![CI](https://github.com/Amritasha/docmost-railway-template/actions/workflows/ci.yml/badge.svg)](https://github.com/Amritasha/docmost-railway-template/actions/workflows/ci.yml)
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template/docmost)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/docmost-1)
 
 [Docmost](https://docmost.com) is an open-source collaborative wiki and documentation platform — a self-hosted alternative to Notion and Confluence. Real-time editing, nested pages, workspaces, and granular permissions.
 
