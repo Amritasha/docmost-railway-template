@@ -1,0 +1,57 @@
+name: Update Docmost image
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'   # every Monday at 08:00 UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    name: Check for new Docmost release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get latest Docmost release
+        id: latest
+        run: |
+          VERSION=$(curl -fsSL https://registry.hub.docker.com/v2/repositories/docmost/docmost/tags?page_size=10 \
+            | python3 -c "
+          import json, sys, re
+          data = json.load(sys.stdin)
+          tags = [t['name'] for t in data['results'] if re.match(r'^\d+\.\d+\.\d+$', t['name'])]
+          print(tags[0] if tags else '')
+          ")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Get current pinned version
+        id: current
+        run: |
+          VERSION=$(grep -oP '(?<=docmost:)\S+' Dockerfile | head -1)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Update Dockerfile if newer version available
+        if: steps.latest.outputs.version != steps.current.outputs.version && steps.latest.outputs.version != ''
+        run: |
+          sed -i "s|FROM docmost/docmost:.*|FROM docmost/docmost:${{ steps.latest.outputs.version }}|" Dockerfile
+
+      - name: Open pull request
+        if: steps.latest.outputs.version != steps.current.outputs.version && steps.latest.outputs.version != ''
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: update/docmost-${{ steps.latest.outputs.version }}
+          commit-message: "chore: update Docmost to ${{ steps.latest.outputs.version }}"
+          title: "chore: update Docmost to ${{ steps.latest.outputs.version }}"
+          body: |
+            Automated update from the weekly image check.
+
+            - **Previous:** `${{ steps.current.outputs.version }}`
+            - **New:** `${{ steps.latest.outputs.version }}`
+
+            [Docmost changelog](https://github.com/docmost/docmost/releases/tag/v${{ steps.latest.outputs.version }})
+          labels: dependencies
