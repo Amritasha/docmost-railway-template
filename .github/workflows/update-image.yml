@@ -19,7 +19,7 @@ jobs:
       - name: Get latest Docmost release
         id: latest
         run: |
-          VERSION=$(curl -fsSL https://registry.hub.docker.com/v2/repositories/docmost/docmost/tags?page_size=10 \
+          VERSION=$(curl -fsSL "https://registry.hub.docker.com/v2/repositories/docmost/docmost/tags?page_size=10&ordering=-last_updated" \
             | python3 -c "
           import json, sys, re
           data = json.load(sys.stdin)
