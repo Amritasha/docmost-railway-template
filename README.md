@@ -15,6 +15,10 @@
 
 Click the **Deploy on Railway** button above. Railway will provision all three services automatically.
 
+## Port note
+
+The `docmost/docmost` image binds to **port 8080** internally. `PORT=8080` is pre-set in `railway.toml` to tell Railway's proxy where to route traffic. Do not change it to 3000 — the app won't respond.
+
 ## Environment variables
 
 Set these after deployment in your Railway project dashboard:
