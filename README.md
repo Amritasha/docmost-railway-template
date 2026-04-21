@@ -7,7 +7,7 @@
 
 ## What's included
 
-- **Docmost** — the app (port 3000)
+- **Docmost** — the app (port 8080)
 - **PostgreSQL** — primary database
 - **Redis** — real-time collaboration + job queue
 

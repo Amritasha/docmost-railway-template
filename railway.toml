@@ -12,5 +12,5 @@ restartPolicyMaxRetries = 10
 mountPath = "/app/data/storage"
 
 [variables]
-PORT = "3000"
+PORT = "8080"
 NODE_ENV = "production"
