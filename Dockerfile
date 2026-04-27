@@ -1,1 +1,1 @@
-FROM docmost/docmost:0.80.0
+FROM docmost/docmost:0.2.0
