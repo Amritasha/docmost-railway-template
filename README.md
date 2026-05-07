@@ -77,6 +77,18 @@ To upgrade manually:
 FROM docmost/docmost:0.81.0
 ```
 
+## When to move on
+
+Docmost works well for teams up to ~50 users. If you outgrow it:
+
+| Need | Go to |
+|------|-------|
+| More structure, enterprise SSO, audit logs | **Confluence** ([$5.75/user/mo](https://www.atlassian.com/software/confluence/pricing)) |
+| Databases + docs in one place | **Notion** |
+| Fully open-source, self-hosted alternative | **Outline** |
+
+**Migrating to Confluence:** There's no official Docmost → Confluence tool. Export pages as Markdown, then use Confluence's Markdown import. Expect some formatting and attachment cleanup. For most teams at this scale, Notion or Outline are easier migrations and cheaper than Confluence.
+
 ## License
 
 Docmost is [AGPL-3.0](https://github.com/docmost/docmost/blob/main/LICENSE). This template is MIT.
